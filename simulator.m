@@ -3,7 +3,7 @@ clear all
 clay_x = 0;
 clay_y = 0;
 clay_theta = 0;
-clay_phi = pi/4;
+clay_phi = 0.001;
 clay_launch_speed = 15.6;
 clay_mass = 0.105; % 105g weight
 clay_Cd = 0.2; % drag coefficient
@@ -15,7 +15,7 @@ shot_x = 5;
 shot_y = 30;
 shot_theta = -pi/4;
 shot_phi = pi/3;
-shot_launch_speed = 300;
+shot_launch_speed = 30;
 
 options = odeset("Events", @ground_event);
 
@@ -31,12 +31,7 @@ options = odeset("Events", @ground_event);
 
 
 clf;
-figure
 plot3(y_clay(:,1),y_clay(:,2),y_clay(:,3), 'DisplayName','Clay');
 hold on;
 plot3(y_shot(:,1),y_shot(:,2),y_shot(:,3), 'DisplayName','Shot');
-xlim([min(y_clay(:,1)) max(y_clay(:,1))])
-ylim([0 50])
-zlim([min(y_clay(:,3)) max(y_clay(:,3))])
-
 legend()
