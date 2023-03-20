@@ -2,7 +2,7 @@ clear all
 
 clay_x = 0;
 clay_y = 0;
-clay_launch_angle = 0.5;
+clay_launch_angle = 0.3; % angle above the horizontal
 clay_launch_speed = 15.6;
 clay_mass = 0.105; % 105g weight
 clay_Cd = 5.07; % drag coefficient
