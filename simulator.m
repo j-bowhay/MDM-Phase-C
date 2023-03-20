@@ -35,3 +35,9 @@ plot3(y_clay(:,1),y_clay(:,2),y_clay(:,3), 'DisplayName','Clay');
 hold on;
 plot3(y_shot(:,1),y_shot(:,2),y_shot(:,3), 'DisplayName','Shot');
 legend()
+
+% crude first go at pellet spread.
+pellet_spread_rad = pellet_spread * pi / 180;
+pellet_spread_x = randn(num_pellets, 1) * pellet_spread_rad;
+pellet_spread_y = randn(num_pellets, 1) * pellet_spread_rad;
+pellet_spread_z = randn(num_pellets, 1) * pellet_spread_rad;
