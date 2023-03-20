@@ -19,7 +19,7 @@ shot_launch_speed = 300;
 
 options = odeset("Events", @ground_event);
 
-[t_clay, y_clay] = ode45(@(t, y) clay_rhs(t, y, clay_mass, clay_Cd, clay_CL, clay_A, rho, clay_theta, clay_phi), [0, 100], ...
+[t_clay, y_clay] = ode45(@(t, y) clay_rhs(t, y, clay_mass, clay_A, rho, clay_Cd, clay_CL), [0, 100], ...
     [clay_x, clay_y, 0,...
     clay_launch_speed*cos(clay_theta)*sin(clay_phi),...
     clay_launch_speed*sin(clay_theta)*sin(clay_phi),...
@@ -30,6 +30,7 @@ options = odeset("Events", @ground_event);
     shot_launch_speed*cos(shot_phi)]', options);
 
 
+clf;
 figure
 plot3(y_clay(:,1),y_clay(:,2),y_clay(:,3), 'DisplayName','Clay');
 hold on;
