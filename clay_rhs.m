@@ -1,12 +1,14 @@
-function dydt = clay_rhs(t, y, m, A, rho, Cd, Cl)
-%[x,y,z,u,v,w]
-alpha = atan(y(5)/ y(4));
-beta = atan(y(6)/ sqrt(y(4)^2 + y(5)^2));
-v = sqrt(y(4)^2+y(5)^2+y(6)^2);
+function dydt = clay_rhs(t, y, M, A, rho, Cd, Cl, theta)
+%[x,y,z,u,v,w] note v should always be zero then rotate afterwards
+alpha = atan2(y(6),y(4));
+v = norm(y(4:end));
 
-dragForce = 0.5 * rho * v^2 * Cd * A;
-liftForce = 0.5 * rho * v^2 * Cl * A;
+D = 0.5 * rho * v^2 * Cd * A; % drag
+L = 0.5 * rho * v^2 * Cl * A; % lift
 
-dydt = [y(4), y(5), y(6), -dragForce*cos(alpha), -dragForce*sin(alpha), -9.81*m+liftForce*sin(beta)]';
+dydt = [y(4), y(5), y(6),...
+    -(D/M)*cos(alpha-theta) - (L/M)*sin(alpha-theta), ...
+    0, ...
+    -(D/M)*sin(alpha-theta) - (L/M)*cos(alpha-theta) - 9.81]';
 end
 
