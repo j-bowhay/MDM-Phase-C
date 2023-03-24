@@ -1,0 +1,45 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define initial parameters
+start_speed = 500  # m/s
+flight_time = .05  # seconds
+num_pellets = 120  # number of pellets
+shot_height = 5    # meters
+shot_angle_horizontal = 30 #positive is clockwise 
+shot_angle_verticle = 30
+
+
+
+# Calculate distance traveled
+distance = start_speed * flight_time 
+spread = 0.5  # Will need changing later for acc equation to encorp time/distance
+
+
+
+# Generate random normal distributions for the x and y coordinates
+x_spread = np.random.normal(0, spread, size=num_pellets)
+y_spread = np.random.normal(0, spread, size=num_pellets) 
+
+
+x_dist = np.sin(np.deg2rad(shot_angle_horizontal)) * distance
+y_dist = np.sin(np.deg2rad(shot_angle_verticle)) * distance
+
+
+#Final x & y values
+x = x_spread +x_dist
+y = y_spread + shot_height +y_dist
+
+# Ensure that all y values are positive
+y = np.clip(y, 0, None)
+
+
+plt.scatter(x, y, alpha=0.5)
+plt.xlim(-20, 20)
+plt.ylim(0, 20)
+plt.gca().set_aspect('equal', adjustable='box')
+plt.xlabel('Distance (m)')
+plt.ylabel('Distance (m)')
+plt.title('Spread of Shotgun Pellets')
+plt.show()
+print('distance travelled by shot =', distance,'m')
