@@ -1,7 +1,8 @@
 from frispy.disc import Disc
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.tri import Triangulation
+from matplotlib.animation import FuncAnimation
+
 
 def get_edge(radii, n=20):
     alpha = np.linspace(0, 2*np.pi, n)
@@ -25,15 +26,19 @@ def main():
     
     fig = plt.figure()
     ax = fig.add_subplot(projection="3d")
-    ax.plot3D(result1["x"], result1["y"], result1["z"], "gray")
     
-    edge_T = get_disc(clay, result1, 50)
-    ax.plot_trisurf(edge_T[:, 0] + result1["x"][0], edge_T[:, 1] + result1["y"][0], edge_T[:, 2] + result1["z"][0])
+    def update(frame):
+        ax.clear()
+        ax.set_xlim((0,25))
+        ax.set_ylim((-5,5))
+        ax.set_zlim((-5,10))
+        ax.axis('equal')
+        edge_T = get_disc(clay, result1, frame)
+        disc = ax.plot_trisurf(edge_T[:, 0] + result1["x"][frame], edge_T[:, 1] + result1["y"][frame], edge_T[:, 2] + result1["z"][frame])
+        ax.plot3D(result1["x"], result1["y"], result1["z"], "gray")
+        return disc,
     
-    ax.axis('equal')
-    ax.set_xlabel("x")
-    ax.set_ylabel("y")
-    ax.set_zlabel("z")
+    ani = FuncAnimation(fig, update, frames=range(len(result1["x"])), interval=1)
     
     plt.show()
 
